@@ -1,0 +1,19 @@
+{
+	"name": "dataset_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Linked_Service_ADLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "silver"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
