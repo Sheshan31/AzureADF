@@ -1,0 +1,80 @@
+{
+	"name": "Scheduled_ingestion",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute Ingestion pipeline",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "ADF_incremental_ingestion",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Alerts",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Execute Ingestion pipeline",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-38.uksouth.logic.azure.com:443/workflows/778d1657b4c5448db832f06ef8ac2edd/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=m5alDZnuyGugDDtD7zoYY1fFWpTpGT5__MGAY3449ok",
+					"body": {
+						"value": "{\n    \"pipeline_name\":\"@{pipeline().Pipeline}\",\n    \"reason\": \"Pipeline Completed Successfully\"\n\n}",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Failed Alerts",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Execute Ingestion pipeline",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-38.uksouth.logic.azure.com:443/workflows/778d1657b4c5448db832f06ef8ac2edd/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=m5alDZnuyGugDDtD7zoYY1fFWpTpGT5__MGAY3449ok",
+					"body": {
+						"value": "{\n    \"pipeline_name\":\"@{pipeline().Pipeline}\",\n    \"reason\": \"Pipeline Failed\"\n\n}",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}

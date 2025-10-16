@@ -1,0 +1,21 @@
+{
+	"name": "sd-adfactory",
+	"properties": {
+		"globalParameters": {
+			"p_containername": {
+				"type": "string",
+				"value": "source"
+			},
+			"owner": {
+				"type": "string",
+				"value": "sheshan"
+			}
+		}
+	},
+	"location": "uksouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "aaef76af-b659-4527-9298-5a04d6bc41c6",
+		"tenantId": "8ef9b40c-1147-4108-849d-7fa3a4472651"
+	}
+}
