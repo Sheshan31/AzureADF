@@ -54,11 +54,23 @@
 				"outputs": [
 					{
 						"referenceName": "dataset_parquet",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"my_name": {
+								"value": "@pipeline().parameters.my_name",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
 		],
+		"parameters": {
+			"my_name": {
+				"type": "string",
+				"defaultValue": "sheshan"
+			}
+		},
 		"folder": {
 			"name": "AzureLib_YT"
 		},
