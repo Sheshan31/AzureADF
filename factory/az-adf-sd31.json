@@ -1,0 +1,9 @@
+{
+	"name": "az-adf-sd31",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "f34450d4-100f-40ca-8ad7-17c34df6089d",
+		"tenantId": "8ef9b40c-1147-4108-849d-7fa3a4472651"
+	}
+}
